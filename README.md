@@ -80,19 +80,3 @@ Type moves in any of these formats:
 | Castling | `O-O-O`| Queen-side castle     |
 
 ---
-
-## Bugs Fixed (vs. original docx)
-
-| # | Bug | Fix |
-|---|-----|-----|
-| 1 | `from random import choicea` — typo | Changed to `choice` |
-| 2 | `INITIAL_BOARD` referenced directly (mutable list shared) | Wrapped in `list()` copy in `Game.__init__` |
-| 3 | `get_attacks()` / `get_moves()` returned implicit `None` for unmatched piece | Added `return 0` fallback |
-| 4 | `count_attacks()` didn't guard `None` from `get_attacks()` | Added `if attacks and attacks & target` guard |
-| 5 | `random_move()` passed generator to `choice()` (requires a sequence) | Wrapped in `list()` |
-| 6 | `evaluated_move()` / `alpha_beta()` could call `choice([])` on empty list | Added empty-list guard |
-| 7 | `find_in_book()` crashed with `FileNotFoundError` if `book.txt` absent | Wrapped in try/except |
-| 8 | Default mutable argument `game=Game()` evaluated once at import time | Changed to `game=None` + `if game is None: game = Game()` |
-| 9 | `pygame.display.flip()` called in `set_title()` (unnecessary) | Removed redundant flip |
-| 10 | Image loading crashed whole program if `images/` folder missing | Wrapped in try/exist check with Unicode fallback |
-| 11 | Key checks used raw ASCII codes (`113`, `104`, etc.) — fragile | Replaced with `pygame.K_*` constants |
